@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Hosting.WindowsServices;
+using SelfHostingMinimalApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +16,7 @@ builder.WebHost.ConfigureKestrel((context, options) =>
 
 var app = builder.Build();
 // Endpoints
-app.MapGet("/", () => "Hello from self hosting api");
+app.AddEndpoints();
 
 // Adds (un)install.bat script to (un)register as Windows service
 var host = app.Services.GetRequiredService<IHost>();
