@@ -1,15 +1,17 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+﻿using Microsoft.Extensions.Hosting.WindowsServices;
 
-// configure port
-var port = builder.Configuration["Hosting:Port"] ?? "9000";
-builder.Configuration
-    .AddConfiguration(new ConfigurationBuilder()
-            // this config replaces .UseUrls from the webBuilder in ConfigureWebHostDefaults
-            .AddInMemoryCollection(new Dictionary<string, string> { ["urls"] = $"http://*:{port}" }!)
-            .Build()
-    );
+var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddWindowsService();
+if (WindowsServiceHelpers.IsWindowsService())
+{
+    builder.Host.UseWindowsService();
+}
+
+builder.WebHost.ConfigureKestrel((context, options) =>
+{
+    options.Configure(context.Configuration.GetSection("Kestrel"));
+});
+
 
 var app = builder.Build();
 // Endpoints

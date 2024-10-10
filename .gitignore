@@ -236,7 +236,8 @@ ClientBin/
 *.dbmdl
 *.dbproj.schemaview
 *.jfm
-*.pfx
+# Allow pfx for demo purposes
+# *.pfx
 *.publishsettings
 orleans.codegen.cs
 
