@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 
-namespace SelfHostingApiWithAuth.ApiKey.Models;
+namespace SelfHostingApiWithAuth.Auth.ApiKey.Models;
 
 public class ApiKeyAuthenticationOptions : AuthenticationSchemeOptions
 {

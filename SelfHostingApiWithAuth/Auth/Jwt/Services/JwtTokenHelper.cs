@@ -1,12 +1,12 @@
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
-using SelfHostingApiWithAuth.Jwt.Abstraction;
-using SelfHostingApiWithAuth.Jwt.Models;
+using SelfHostingApiWithAuth.Auth.Jwt.Abstraction;
+using SelfHostingApiWithAuth.Auth.Jwt.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace SelfHostingApiWithAuth.Jwt.Services;
+namespace SelfHostingApiWithAuth.Auth.Jwt.Services;
 
 public class JwtTokenHelper : ITokenHelper
 {

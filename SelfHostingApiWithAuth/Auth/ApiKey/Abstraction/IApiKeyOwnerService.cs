@@ -1,6 +1,6 @@
-﻿using SelfHostingApiWithAuth.ApiKey.Models;
+﻿using SelfHostingApiWithAuth.Auth.ApiKey.Models;
 
-namespace SelfHostingApiWithAuth.ApiKey.Abstraction;
+namespace SelfHostingApiWithAuth.Auth.ApiKey.Abstraction;
 
 public interface IApiKeyOwnerService
 {

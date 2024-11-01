@@ -1,4 +1,4 @@
-namespace SelfHostingApiWithAuth.Jwt.Samples;
+namespace SelfHostingApiWithAuth.Auth.Jwt.Samples;
 
 public class RefreshOptions
 {

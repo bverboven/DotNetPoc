@@ -1,8 +1,8 @@
-﻿using SelfHostingApiWithAuth.ApiKey.Abstraction;
-using SelfHostingApiWithAuth.ApiKey.Extensions;
-using SelfHostingApiWithAuth.ApiKey.Models;
+﻿using SelfHostingApiWithAuth.Auth.ApiKey.Abstraction;
+using SelfHostingApiWithAuth.Auth.ApiKey.Extensions;
+using SelfHostingApiWithAuth.Auth.ApiKey.Models;
 
-namespace SelfHostingApiWithAuth.ApiKey.Services;
+namespace SelfHostingApiWithAuth.Auth.ApiKey.Services;
 
 public class InMemoryApiKeyOwnerService : IApiKeyOwnerService
 {

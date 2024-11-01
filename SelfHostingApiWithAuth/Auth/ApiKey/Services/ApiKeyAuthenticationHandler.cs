@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using SelfHostingApiWithAuth.ApiKey.Abstraction;
-using SelfHostingApiWithAuth.ApiKey.Models;
+using SelfHostingApiWithAuth.Auth.ApiKey.Abstraction;
+using SelfHostingApiWithAuth.Auth.ApiKey.Models;
 using System.Security.Claims;
 using System.Text.Encodings.Web;
 
-namespace SelfHostingApiWithAuth.ApiKey.Services;
+namespace SelfHostingApiWithAuth.Auth.ApiKey.Services;
 
 public class ApiKeyAuthenticationHandler : AuthenticationHandler<ApiKeyAuthenticationOptions>
 {

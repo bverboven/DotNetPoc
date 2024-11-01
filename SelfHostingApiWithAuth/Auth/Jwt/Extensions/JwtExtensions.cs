@@ -2,12 +2,12 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using SelfHostingApiWithAuth.Jwt.Models;
-using SelfHostingApiWithAuth.Jwt.Services;
+using SelfHostingApiWithAuth.Auth.Jwt.Models;
+using SelfHostingApiWithAuth.Auth.Jwt.Services;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Text;
 
-namespace SelfHostingApiWithAuth.Jwt.Extensions
+namespace SelfHostingApiWithAuth.Auth.Jwt.Extensions
 {
     public static class JwtExtensions
     {

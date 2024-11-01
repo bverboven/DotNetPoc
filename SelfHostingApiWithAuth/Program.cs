@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.OpenApi.Models;
-using SelfHostingApiWithAuth.ApiKey.Extensions;
-using SelfHostingApiWithAuth.ApiKey.Models;
-using SelfHostingApiWithAuth.Jwt.Extensions;
+using SelfHostingApiWithAuth.Auth.ApiKey.Extensions;
+using SelfHostingApiWithAuth.Auth.ApiKey.Models;
+using SelfHostingApiWithAuth.Auth.Jwt.Extensions;
 using System.Reflection;
 
 // Configure Services
@@ -75,10 +75,11 @@ builder.Services.AddSwaggerGen(s =>
     }
 });
 
+
 // Configure Application
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Swagger
 //if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -89,6 +90,7 @@ var app = builder.Build();
     });
 }
 
+// Force https
 //app.UseHttpsRedirection();
 
 app

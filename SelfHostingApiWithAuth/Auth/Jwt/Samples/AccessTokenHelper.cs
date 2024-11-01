@@ -2,7 +2,7 @@ using IdentityModel.Client;
 using Microsoft.AspNetCore.Authentication;
 using System.Globalization;
 
-namespace SelfHostingApiWithAuth.Jwt.Samples;
+namespace SelfHostingApiWithAuth.Auth.Jwt.Samples;
 
 public class AccessTokenHelper
 {

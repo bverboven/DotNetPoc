@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
-namespace SelfHostingApiWithAuth.Jwt.Models;
+namespace SelfHostingApiWithAuth.Auth.Jwt.Models;
 
 public class JwtTokenOptions
 {

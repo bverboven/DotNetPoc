@@ -1,6 +1,6 @@
 using System.Security.Claims;
 
-namespace SelfHostingApiWithAuth.Jwt.Abstraction;
+namespace SelfHostingApiWithAuth.Auth.Jwt.Abstraction;
 
 public interface ITokenHelper
 {

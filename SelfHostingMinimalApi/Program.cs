@@ -13,8 +13,22 @@ builder.WebHost.ConfigureKestrel((context, options) =>
     options.Configure(context.Configuration.GetSection("Kestrel"));
 });
 
+// Swagger
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+// Swagger
+//if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("swagger/v1/swagger.json", "Self Hosting API");
+        c.RoutePrefix = string.Empty;
+    });
+}
+
 // Endpoints
 app.AddEndpoints();
 

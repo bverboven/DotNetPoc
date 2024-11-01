@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace SelfHostingApiWithAuth.Jwt.Extensions;
+namespace SelfHostingApiWithAuth.Auth.Jwt.Extensions;
 
 public static class PrincipalExtensions
 {

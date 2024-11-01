@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.OpenApi.Models;
-using SelfHostingApiWithAuth.ApiKey.Abstraction;
-using SelfHostingApiWithAuth.ApiKey.Models;
-using SelfHostingApiWithAuth.ApiKey.Services;
+using SelfHostingApiWithAuth.Auth.ApiKey.Abstraction;
+using SelfHostingApiWithAuth.Auth.ApiKey.Models;
+using SelfHostingApiWithAuth.Auth.ApiKey.Services;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace SelfHostingApiWithAuth.ApiKey.Extensions;
+namespace SelfHostingApiWithAuth.Auth.ApiKey.Extensions;
 
 public static class ApiKeyExtensions
 {

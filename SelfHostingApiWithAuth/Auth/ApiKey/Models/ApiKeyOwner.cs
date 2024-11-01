@@ -1,4 +1,4 @@
-﻿namespace SelfHostingApiWithAuth.ApiKey.Models;
+﻿namespace SelfHostingApiWithAuth.Auth.ApiKey.Models;
 
 public class ApiKeyOwner
 {

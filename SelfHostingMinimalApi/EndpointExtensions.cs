@@ -9,7 +9,7 @@ public static class EndpointExtensions
     }
 
     public static RouteHandlerBuilder AddDefaultMap(this IEndpointRouteBuilder app)
-        => app.MapGet("/", () => "Hello from self hosting api");
+        => app.MapGet("/hello", () => "Hello from self hosting api");
     public static RouteHandlerBuilder AddAboutMap(this IEndpointRouteBuilder app)
         => app.MapGet("/about", () => "About me");
 }
