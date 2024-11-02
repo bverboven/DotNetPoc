@@ -4,10 +4,10 @@
         "SelfHostingApiWithAuth": {
             "commandName": "Project",
             "launchBrowser": true,
+            "launchUrl": "https://localhost:5443",
             "environmentVariables": {
                 "ASPNETCORE_ENVIRONMENT": "Development"
-            },
-            "applicationUrl": "http://localhost:9002/swagger/index.html"
+            }
         }
     }
 }
