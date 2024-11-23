@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using SelfHostingApiWithAuth.Auth.Jwt.Abstraction;
 using SelfHostingApiWithAuth.Auth.Jwt.Models;
 using SelfHostingApiWithAuth.Auth.Jwt.Services;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -22,7 +23,7 @@ namespace SelfHostingApiWithAuth.Auth.Jwt.Extensions
             }
 
             return services
-                .AddTransient(_ => new JwtTokenHelper(options))
+                .AddTransient<ITokenHelper>(_ => new JwtTokenHelper(options))
                 .AddAuthentication(options.AuthenticationScheme)
                 .AddJwtBearer(options.AuthenticationScheme, x =>
                 {
