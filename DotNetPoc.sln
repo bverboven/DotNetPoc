@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.8.34330.188
+# Visual Studio Version 18
+VisualStudioVersion = 18.0.11205.157 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SelfHostingMinimalApi", "SelfHostingMinimalApi\SelfHostingMinimalApi.csproj", "{4EF8B7B2-C643-472A-8A5D-CAB16B59D9C9}"
 EndProject

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Hosting.WindowsServices;
+using Scalar.AspNetCore;
 using SelfHostingMinimalApi;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,20 +14,19 @@ builder.WebHost.ConfigureKestrel((context, options) =>
     options.Configure(context.Configuration.GetSection("Kestrel"));
 });
 
-// Swagger
-builder.Services.AddSwaggerGen();
+// OpenApi
+builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
-// Swagger
 //if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
+    app.MapOpenApi();
+    app.UseSwaggerUI(options =>
     {
-        c.SwaggerEndpoint("swagger/v1/swagger.json", "Self Hosting API");
-        c.RoutePrefix = string.Empty;
+        options.SwaggerEndpoint("/openapi/v1.json", "v1");
     });
+    app.MapScalarApiReference();
 }
 
 // Endpoints
