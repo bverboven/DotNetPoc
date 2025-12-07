@@ -4,13 +4,9 @@ using SelfHostingApiWithAuth.Auth.ApiKey.Models;
 
 namespace SelfHostingApiWithAuth.Auth.ApiKey.Services;
 
-public class InMemoryApiKeyOwnerService : IApiKeyOwnerService
+public class InMemoryApiKeyOwnerService(IEnumerable<ApiKeyOwner> apiKeyOwners) : IApiKeyOwnerService
 {
-    private readonly IList<ApiKeyOwner> _apiKeyOwners;
-    public InMemoryApiKeyOwnerService(IEnumerable<ApiKeyOwner> apiKeyOwners)
-    {
-        _apiKeyOwners = apiKeyOwners.ToArray();
-    }
+    private readonly IList<ApiKeyOwner> _apiKeyOwners = apiKeyOwners.ToArray();
 
     public Task<ApiKeyOwner?> FindByOwner(string id)
     {

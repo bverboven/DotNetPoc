@@ -1,20 +1,12 @@
 using IdentityModel.Client;
 using Microsoft.AspNetCore.Authentication;
+using SelfHostingApiWithAuth.Auth.Jwt.Models;
 using System.Globalization;
 
-namespace SelfHostingApiWithAuth.Auth.Jwt.Samples;
+namespace SelfHostingApiWithAuth.Auth.Jwt.Services;
 
-public class AccessTokenHelper
+public class AccessTokenHelper(IHttpContextAccessor httpContextAccessor, HttpClient httpClient)
 {
-    private readonly IHttpContextAccessor _httpContextAccessor;
-    private readonly HttpClient _httpClient;
-    public AccessTokenHelper(IHttpContextAccessor httpContextAccessor, HttpClient httpClient)
-    {
-        _httpContextAccessor = httpContextAccessor;
-        _httpClient = httpClient;
-    }
-
-
     /// <summary>
     /// Gets and returns an access token. Refreshes the token when needed.
     /// </summary>
@@ -24,7 +16,7 @@ public class AccessTokenHelper
     {
         if (!await IsExpired())
         {
-            var context = _httpContextAccessor.HttpContext ?? throw new NotSupportedException("HttpContext does not exist");
+            var context = httpContextAccessor.HttpContext ?? throw new NotSupportedException("HttpContext does not exist");
             // no need to refresh
             return await context.GetTokenAsync("access_token");
         }
@@ -42,7 +34,7 @@ public class AccessTokenHelper
     /// <returns>true when token is expired</returns>
     public async Task<bool> IsExpired()
     {
-        var context = _httpContextAccessor.HttpContext ?? throw new NotSupportedException("HttpContext does not exist");
+        var context = httpContextAccessor.HttpContext ?? throw new NotSupportedException("HttpContext does not exist");
         var expiresAt = await context.GetTokenAsync("expires_at");
         if (expiresAt == null)
         {
@@ -58,10 +50,10 @@ public class AccessTokenHelper
     /// <returns>Valid access token</returns>
     public async Task<string> RefreshToken(RefreshOptions refreshOptions)
     {
-        var context = _httpContextAccessor.HttpContext ?? throw new NotSupportedException("HttpContext does not exist");
+        var context = httpContextAccessor.HttpContext ?? throw new NotSupportedException("HttpContext does not exist");
 
         // discovery document
-        var discoveryResponse = await _httpClient.GetDiscoveryDocumentAsync();
+        var discoveryResponse = await httpClient.GetDiscoveryDocumentAsync();
 
         // refresh the tokens
         var refreshToken = await context.GetTokenAsync("refresh_token");
@@ -70,23 +62,23 @@ public class AccessTokenHelper
             Address = discoveryResponse.TokenEndpoint,
             ClientId = refreshOptions.ClientId,
             ClientSecret = refreshOptions.ClientSecret,
-            RefreshToken = refreshToken
+            RefreshToken = refreshToken!
         };
-        var refreshResponse = await _httpClient.RequestRefreshTokenAsync(refreshTokenRequest);
+        var refreshResponse = await httpClient.RequestRefreshTokenAsync(refreshTokenRequest);
 
         // store the tokens
         var updatedTokens = new[] {
             new AuthenticationToken {
                 Name = "id_token",
-                Value = refreshResponse.IdentityToken
+                Value = refreshResponse.IdentityToken!
             },
             new AuthenticationToken {
                 Name = "access_token",
-                Value = refreshResponse.AccessToken
+                Value = refreshResponse.AccessToken!
             },
             new AuthenticationToken {
                 Name = "refresh_token",
-                Value = refreshResponse.RefreshToken
+                Value = refreshResponse.RefreshToken!
             },
             new AuthenticationToken {
                 Name = "expires_at",
@@ -104,6 +96,6 @@ public class AccessTokenHelper
         // sign in
         await context.SignInAsync(refreshOptions.AuthenticationScheme, currentAuthenticateResult.Principal!, currentAuthenticateResult.Properties);
 
-        return refreshResponse.RefreshToken;
+        return refreshResponse.RefreshToken!;
     }
 }

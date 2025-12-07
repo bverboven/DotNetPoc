@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using SelfHostingApiWithAuth.Auth.ApiKey.Models;
+﻿using SelfHostingApiWithAuth.Auth.ApiKey.Models;
 
 namespace SelfHostingApiWithAuth.Auth.ApiKey.Extensions;
 
@@ -16,8 +15,8 @@ public static class ConfigurationExtensions
     {
         return new ApiKeyOwner
         {
-            Key = apiKeySection["Key"]!,
-            OwnerId = apiKeySection["OwnerId"]!
+            Key = apiKeySection["Key"],
+            OwnerId = apiKeySection["OwnerId"]
         };
     }
 }

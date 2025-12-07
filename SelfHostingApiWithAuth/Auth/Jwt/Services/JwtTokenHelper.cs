@@ -1,32 +1,22 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using SelfHostingApiWithAuth.Auth.Jwt.Abstraction;
 using SelfHostingApiWithAuth.Auth.Jwt.Models;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 
 namespace SelfHostingApiWithAuth.Auth.Jwt.Services;
 
-public class JwtTokenHelper : ITokenHelper
+public class JwtTokenHelper(JwtTokenOptions options) : ITokenHelper
 {
-    private readonly string _secret;
-    private readonly string? _algorithm;
-    private readonly string? _authority;
-    private readonly string? _defaultAudience;
-    private readonly int _defaultLifeSpan;
-    private readonly bool _includeIssuedDate;
-    private readonly ICollection<string>? _validAudiences;
-    public JwtTokenHelper(JwtTokenOptions options)
-    {
-        _secret = options.Secret;
-        _algorithm = options.Algorithm ?? SecurityAlgorithms.HmacSha512Signature;
-        _authority = options.Authority;
-        _defaultAudience = options.Audience;
-        _validAudiences = options.Audiences;
-        _defaultLifeSpan = options.LifeSpan;
-        _includeIssuedDate = options.IncludeIssuedDate;
-    }
+    private readonly string _secret = options.Secret;
+    private readonly string? _algorithm = options.Algorithm ?? SecurityAlgorithms.HmacSha512Signature;
+    private readonly string? _authority = options.Authority;
+    private readonly string? _defaultAudience = options.Audience;
+    private readonly int _defaultLifeSpan = options.LifeSpan;
+    private readonly bool _includeIssuedDate = options.IncludeIssuedDate;
+    private readonly ICollection<string>? _validAudiences = options.Audiences;
 
 
     public string Create(IEnumerable<Claim> claims, string? audience = null, int? lifeSpan = null)
@@ -50,7 +40,7 @@ public class JwtTokenHelper : ITokenHelper
         var token = tokenHandler.CreateToken(tokenDescriptor);
         return tokenHandler.WriteToken(token);
     }
-    public bool Validate(string token)
+    public async Task<bool> Validate(string token)
     {
         var secretKey = Encoding.ASCII.GetBytes(_secret);
         var symmetricKey = new SymmetricSecurityKey(secretKey);
@@ -62,7 +52,7 @@ public class JwtTokenHelper : ITokenHelper
             ValidIssuer = _authority,
             ValidAudiences = _validAudiences ?? (_defaultAudience != null ? new[] { _defaultAudience } : null)
         };
-        var validateResult = tokenHandler.ValidateToken(token, validationParams);
+        var validateResult = await tokenHandler.ValidateTokenAsync(token, validationParams);
 
         return validateResult.IsValid;
     }

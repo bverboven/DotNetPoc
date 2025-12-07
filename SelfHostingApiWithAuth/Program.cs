@@ -1,9 +1,10 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.OpenApi.Models;
+using Scalar.AspNetCore;
 using SelfHostingApiWithAuth.Auth.ApiKey.Extensions;
 using SelfHostingApiWithAuth.Auth.ApiKey.Models;
 using SelfHostingApiWithAuth.Auth.Jwt.Extensions;
+using SelfHostingApiWithAuth.OpenApi.Transformers;
 using System.Reflection;
 
 // Configure Services
@@ -27,8 +28,11 @@ var authBuilder = builder.Services
     .AddApiKeyAuthentication()
     .AddInMemoryApiKeyAuthentication(builder.Configuration.GetSection("Authentication:ApiKeys").ToApiKeyOwners());
 // Authentication (JWT)
-var secret = builder.Configuration["Authentication:Jwt:Secret"];
-builder.Services.AddJwtAuthentication(o => o.Secret = secret ?? throw new NullReferenceException("Secret is missing"));
+builder.Services.AddJwtAuthentication(o =>
+{
+    var secret = builder.Configuration["Authentication:Jwt:Secret"];
+    o.Secret = secret ?? throw new NullReferenceException("Secret is missing");
+});
 
 authBuilder
     .AddPolicyScheme("Smart", "Authorization Bearer or ApiKey", options =>
@@ -41,7 +45,7 @@ authBuilder
                 return JwtBearerDefaults.AuthenticationScheme;
             }
 
-            return ApiKeyConstants.AuthenticationScheme;
+            return ApiKeyDefaults.AuthenticationScheme;
         };
     });
 
@@ -50,7 +54,7 @@ builder.Services.AddAuthorization(options =>
 {
     var schemes = new List<string>();
     // API
-    schemes.Add(ApiKeyConstants.AuthenticationScheme);
+    schemes.Add(ApiKeyDefaults.AuthenticationScheme);
     // JWT
     schemes.Add(JwtBearerDefaults.AuthenticationScheme);
     options.DefaultPolicy = new AuthorizationPolicyBuilder()
@@ -59,34 +63,28 @@ builder.Services.AddAuthorization(options =>
         .Build();
 });
 
-// Swagger
-builder.Services.AddSwaggerGen(s =>
+// OpenAPI
+builder.Services.AddOpenApi(options =>
 {
-    s.SwaggerDoc("v1", new OpenApiInfo { Title = applicationName, Version = $"v{version.Major}.{version.Minor}.{version.Build}" });
-
-    s.AddJwtAuthentication();
-    s.AddApiKeyAuthentication();
-
-    var xmlFile = $"{applicationName}.xml";
-    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-    if (File.Exists(xmlPath))
-    {
-        s.IncludeXmlComments(xmlPath, true);
-    }
+    options.AddDocumentTransformer<ApiKeySecurityDocumentTransformer>();
+    options.AddDocumentTransformer<BearerSecurityDocumentTransformer>();
 });
 
 
 // Configure Application
 var app = builder.Build();
 
-// Swagger
 //if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
+    app
+        .MapOpenApi()
+        .AllowAnonymous();
+    app.MapScalarApiReference(options =>
     {
-        c.SwaggerEndpoint("swagger/v1/swagger.json", $"{applicationName} v{version.Major}.{version.Minor}");
-        c.RoutePrefix = string.Empty;
+        options.Authentication = new ScalarAuthenticationOptions
+        {
+            PreferredSecuritySchemes = [ApiKeyDefaults.AuthenticationScheme, JwtBearerDefaults.AuthenticationScheme]
+        };
     });
 }
 

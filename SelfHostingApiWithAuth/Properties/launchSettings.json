@@ -4,7 +4,7 @@
         "SelfHostingApiWithAuth": {
             "commandName": "Project",
             "launchBrowser": true,
-            "launchUrl": "https://localhost:5443",
+            "launchUrl": "https://localhost:5443/scalar",
             "environmentVariables": {
                 "ASPNETCORE_ENVIRONMENT": "Development"
             }

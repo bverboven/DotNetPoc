@@ -1,3 +1,4 @@
+using IdentityModel;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace SelfHostingApiWithAuth.Auth.Jwt.Models;
@@ -17,4 +18,9 @@ public class JwtTokenOptions
     /// </summary>
     public int LifeSpan { get; set; } = 60 * 60 * 2;
     public bool IncludeIssuedDate { get; set; } = true;
+
+    public string NameClaimType { get; set; } = JwtClaimTypes.Name;
+    public string RoleClaimType { get; set; } = JwtClaimTypes.Role;
+
+    public bool UseJwtClaimTypes { get; set; } = true;
 }
