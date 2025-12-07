@@ -3,7 +3,7 @@ using Regira.BackgroundJobsManager.Quartz;
 
 namespace Regira.BackgroundJobsManager.Hangfire;
 
-public class MyHangfireJob(ILogger<MyQuartzJob> logger)
+public class MyHangfireJob(ILogger<MyHangfireJob> logger)
 {
     public Task Execute()
     {

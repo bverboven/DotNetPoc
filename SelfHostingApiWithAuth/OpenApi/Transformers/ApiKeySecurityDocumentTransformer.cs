@@ -19,10 +19,6 @@ public class ApiKeySecurityDocumentTransformer(IAuthenticationSchemeProvider aut
                 Name = ApiKeyDefaults.HeaderName,
                 Description = $"API key required in the '{ApiKeyDefaults.HeaderName}' header"
             };
-            var requirements = new Dictionary<string, IOpenApiSecurityScheme>
-            {
-                [ApiKeyDefaults.AuthenticationScheme] = scheme
-            };
             document.Components ??= new OpenApiComponents();
             document.Components.SecuritySchemes ??= new Dictionary<string, IOpenApiSecurityScheme>();
             document.Components.SecuritySchemes.TryAdd(ApiKeyDefaults.AuthenticationScheme, scheme);

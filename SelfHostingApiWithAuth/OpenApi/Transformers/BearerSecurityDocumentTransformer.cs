@@ -19,10 +19,6 @@ public class BearerSecurityDocumentTransformer(IAuthenticationSchemeProvider aut
                 In = ParameterLocation.Header,
                 BearerFormat = "Json Web Token"
             };
-            var requirements = new Dictionary<string, IOpenApiSecurityScheme>
-            {
-                ["Bearer"] = scheme
-            };
             document.Components ??= new OpenApiComponents();
             document.Components.SecuritySchemes ??= new Dictionary<string, IOpenApiSecurityScheme>();
             document.Components.SecuritySchemes.TryAdd("Bearer", scheme);
