@@ -1,9 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
-using Serilog.Events;
-using System.Reflection;
 
 namespace Regira.ConsoleWithLogging;
 
@@ -38,11 +35,7 @@ public static class HostExtensions
     {
         builder.UseSerilog((context, configuration) =>
         {
-            var assemblyName = Assembly.GetExecutingAssembly().GetName().Name;
-            configuration
-                .ReadFrom.Configuration(context.Configuration)
-                .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-                .MinimumLevel.Override("System", LogEventLevel.Warning);
+            configuration.ReadFrom.Configuration(context.Configuration);
         });
 
         return builder;

@@ -42,7 +42,7 @@ try
 }
 catch (Exception ex)
 {
-    // Host error, logger might not be instanciated
+    // Host error, logger might not be instantiated
     Log.Error(ex, "Host failed");
 }
 finally
