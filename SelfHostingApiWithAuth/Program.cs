@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.OpenApi;
 using Scalar.AspNetCore;
 using SelfHostingApiWithAuth.Auth.ApiKey.Extensions;
 using SelfHostingApiWithAuth.Auth.ApiKey.Models;
 using SelfHostingApiWithAuth.Auth.Jwt.Extensions;
+using SelfHostingApiWithAuth.Auth.Swagger;
 using SelfHostingApiWithAuth.OpenApi.Transformers;
 using System.Reflection;
 
@@ -70,15 +72,22 @@ builder.Services.AddOpenApi(options =>
     options.AddDocumentTransformer<BearerSecurityDocumentTransformer>();
 });
 
+// Swagger
+builder.Services
+    .AddSwaggerWithAuth();
+
 
 // Configure Application
 var app = builder.Build();
 
 //if (app.Environment.IsDevelopment())
 {
+    // OpenApi
     app
         .MapOpenApi()
         .AllowAnonymous();
+
+    // Scalar
     app.MapScalarApiReference(options =>
     {
         options.Authentication = new ScalarAuthenticationOptions
@@ -86,6 +95,9 @@ var app = builder.Build();
             PreferredSecuritySchemes = [ApiKeyDefaults.AuthenticationScheme, JwtBearerDefaults.AuthenticationScheme]
         };
     });
+
+    // Swagger
+    app.UseSwaggerWithAuth();
 }
 
 // Force https
