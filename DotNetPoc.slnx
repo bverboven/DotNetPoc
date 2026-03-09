@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/ai/" />
+  <Folder Name="/ai/instructions/">
+    <File Path="ai/copilot-instructions.md" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path=".gitignore" />
+    <File Path="README.md" />
+  </Folder>
+  <Project Path="BackgroundJobsManager/BackgroundJobsManager.csproj" />
+  <Project Path="ConsoleWithLogging/ConsoleWithLogging.csproj" />
+  <Project Path="SelfHostingApiWithAuth/SelfHostingApiWithAuth.csproj" />
+  <Project Path="SelfHostingMinimalApi/SelfHostingMinimalApi.csproj" />
+</Solution>
